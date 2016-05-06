@@ -1,0 +1,13 @@
+<config>
+
+    <!--- Parte manual de configuracion -->
+    <nombrePlaneta>Blue</nombrePlaneta>
+    <radioEspionaje>60</radioEspionaje>
+    <tiempoVueloSondas>90</tiempoVueloSondas>
+    <minRankEspionaje>1600</minRankEspionaje>
+    <!--- Tipo naves 0 pequeñas o 1 grandes -->
+    <tipoNavesAtaques>1</tipoNavesAtaques>
+
+    <!-- Parte automatica de configuracion, aunque se puede ajustar manualmente -->
+    <sondasPorEspiojane>3</sondasPorEspiojane>
+</config>
