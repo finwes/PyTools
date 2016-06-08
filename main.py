@@ -1,6 +1,6 @@
 import globalConstants
 import oGameTools
-import sys
+import sys,os
 
 from spaceship import *
 from fleetControl import *
@@ -14,6 +14,13 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.support import expected_conditions as EC
 
 def main():
+
+    #ponemos como default encoding utf8 para evitar problemas de acentos y cosas asi
+    reload(sys)
+    sys.setdefaultencoding('utf8')
+
+    # cambiamos el directorio de trabajo al directorio del main
+    os.chdir(os.path.dirname(os.path.abspath(sys.argv[0])))
 
     #inicializamos las variables Globales
     globalConstants.init()

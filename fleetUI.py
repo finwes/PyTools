@@ -31,25 +31,25 @@ class FleetUI:
             getElementByXPath(self.driver, 10, ".//*[@id='ship_203']").send_keys(str(numNavesGrandes))
 
         #clickamos continuar
-        time.sleep(1)
+        time.sleep(2)
         getElementByXPath(self.driver, 10, ".//*[@id='continue']").click()
 
         #configuramos el planeta destino de la flota
-        time.sleep(1)
+        time.sleep(2)
         sendKeysByXPath(self.driver, 10, ".//*[@id='galaxy']", str(galaxy))
         sendKeysByXPath(self.driver, 10, ".//*[@id='system']", str(system))
         sendKeysByXPath(self.driver, 10, ".//*[@id='position']", str(planetPosition))
 
         #clickamos continuar
-        time.sleep(1)
+        time.sleep(2)
         getElementByXPath(self.driver, 10, ".//*[@id='continue']").click()
 
         #seleccionamos como mision atacar
-        time.sleep(1)
+        time.sleep(2)
         getElementByXPath(self.driver, 10, ".//*[@id='missionButton1']").click()
 
         #lanzamos la flota
-        time.sleep(1)
+        time.sleep(2)
         getElementByXPath(self.driver, 10, ".//*[@id='start']").click()
 
         #la flota ya esta en el aire pero debemos notificarlo al control de flotas del Bot para que la contavilice

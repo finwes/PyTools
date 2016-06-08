@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../instaTools/.idea/instaTools.iml" filepath="$PROJECT_DIR$/../instaTools/.idea/instaTools.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/oGameTools.iml" filepath="$PROJECT_DIR$/.idea/oGameTools.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../twitterTools/.idea/twitterTools.iml" filepath="$PROJECT_DIR$/../twitterTools/.idea/twitterTools.iml" />
     </modules>
   </component>
 </project>
