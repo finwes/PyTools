@@ -2,6 +2,7 @@ import time
 import random
 import globalConstants
 
+from selenium.webdriver.common.keys import Keys
 from seleniumTools import *
 from generalTools import *
 from spyReport import SpyReport
@@ -65,6 +66,8 @@ class MessagesUI:
     def parseSpyReport(self, mensaje):
         msgID = int(mensaje.get_attribute("data-msg-id"))
 
+        nombre = getElementByXPath(mensaje, 10 , ".//a[contains(@href,'ogame.gameforge.com/game/index.php?page=galaxy&galaxy=')]").text;
+
         textoFlotas = getElementByXPath(mensaje, 10, ".//span[contains(text(),'Flotas')]").text.replace(".","")
         flotas = int (textoFlotas[textoFlotas.find(":")+1:len(textoFlotas)])
 
@@ -85,7 +88,7 @@ class MessagesUI:
         sistema = textoPlaneta[0:textoPlaneta.find(":")]
         posicionPlaneta = textoPlaneta[textoPlaneta.find(":")+1:len(textoPlaneta)]
 
-        return SpyReport(msgID, flotas, defensas, recursos, botin, galaxia, sistema, posicionPlaneta)
+        return SpyReport(msgID, nombre, flotas, defensas, recursos, botin, galaxia, sistema, posicionPlaneta)
 
     def refreshSpyReport(self, idReport):
         reportRefrescado = False
@@ -97,11 +100,11 @@ class MessagesUI:
                 globalConstants.fleetControl.sendFleet(0,0,self.numeroDeSodasPorEspionaje)
 
                 #solo falta clickar el boton de espiar del planeta para enviar las sondas
-                getElementByXPath(self.driver, 10, ".//li[@data-msg-id='"+str(idReport)+"']//a[contains(@onclick, 'sendShipsWithPopup')]").click()
+                getElementByXPath(self.driver, 10, ".//a[contains(text(),'"+idReport+"')]/../../..//a[contains(@onclick, 'sendShipsWithPopup')]").click()
                 #despues de espiar un planeta esperamos entre 1 y 2 segundos para dejar tiempo al cliente (popups, etc)
                 time.sleep(1)
                 #Ahora borramos el repor antiguo
-                getElementByXPath(self.driver, 10, ".//li[@data-msg-id='"+str(idReport)+"']//a[@class = 'fright']").click()
+                getElementByXPath(self.driver, 10, ".//a[contains(text(),'"+idReport+"')]/../../..//a[@class = 'fright']").click()
                 #esperamos 1 segundo
                 time.sleep(1)
                 reportRefrescado = True
@@ -121,7 +124,16 @@ class MessagesUI:
 
         self.goToTab("Espionaje")
         for report in self.spyReports:
-            self.refreshSpyReport(report.msgID)
+            reintentos = 0
+            while reintentos < 3:
+                try:
+                    self.refreshSpyReport(report.nombre)
+                    break
+                except Exception as error:
+                    #Aveces queda demasiado abajo el icono y no se puede clickar, nos movemos hacia abajo y reintentamos
+                    reintentos+=1
+                    self.driver.switch_to.active_element.send_keys(Keys.PAGE_DOWN)
+
 
         #esperamos que vuelvan todas las sondas que todavia esten volando
         print "Esperando que vuelvan las sondas para analizar los nuevos reports (90 secs aprox)..."
@@ -144,8 +156,16 @@ class MessagesUI:
         mensajes.extend(self.driver.find_elements_by_xpath(".//span[contains(text(),'destruido')]//..//a[@class='fright']"))
         for mensaje in mensajes:
             if mensaje.is_displayed():
-                mensaje.click()
-                time.sleep(1)
+                reintentos = 0
+                while reintentos < 3:
+                    try:
+                        mensaje.click()
+                        time.sleep(1)
+                        break
+                    except Exception as error:
+                        #Aveces queda demasiado abajo el icono y no se puede clickar, nos movemos hacia abajo y reintentamos
+                        reintentos+=1
+                        self.driver.switch_to.active_element.send_keys(Keys.PAGE_DOWN)
 
     def populateSpyReports(self):
 

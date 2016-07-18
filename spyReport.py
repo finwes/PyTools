@@ -1,7 +1,7 @@
 from planet import *
 
 class SpyReport:
-    def __init__(self, msgID, flotas, defensas, recursos, botinPosible, galaxy, system, planetPosition):
+    def __init__(self, msgID, nombre, flotas, defensas, recursos, botinPosible, galaxy, system, planetPosition):
         self.msgID = msgID
         self.flotas = flotas
         self.defensas = defensas
@@ -12,3 +12,4 @@ class SpyReport:
         self.galaxy = galaxy
         self.system = system
         self.planetPosition = planetPosition
+        self.nombre = nombre

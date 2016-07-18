@@ -55,8 +55,10 @@ def login(server, login, password):
     globalConstants.password = password
 
     #recuperamos el driver
-    #driver = webdriver.Chrome("./browserDrivers/chromedriver.exe")
-    driver = webdriver.Firefox()
+    driver = webdriver.Chrome("./browserDrivers/chromedriver.exe")
+    #driver = webdriver.Firefox()
+
+    driver.maximize_window()
     driver.get("https://es.ogame.gameforge.com/")
 
     #realizamos el login a la aplicacion
