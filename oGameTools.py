@@ -1,5 +1,6 @@
 import globalConstants
 import generalTools
+import os
 
 from galaxyUI import *
 from generalTools import *
@@ -55,7 +56,12 @@ def login(server, login, password):
     globalConstants.password = password
 
     #recuperamos el driver
-    driver = webdriver.Chrome("./browserDrivers/chromedriver.exe")
+    if os.name=='posix':
+        #Driver para linux
+        driver = webdriver.Chrome("./browserDrivers/chromedriver")
+    else:
+        #Driver para windows
+        driver = webdriver.Chrome("./browserDrivers/chromedriver.exe")
     #driver = webdriver.Firefox()
 
     driver.maximize_window()
